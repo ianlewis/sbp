@@ -4,7 +4,10 @@ load src_helper
 
 setup() {
   export SBP_CONFIG="${TMP_DIR}/local_config"
+  export SBP_STATE="${TMP_DIR}/local_state"
   mkdir -p "$SBP_CONFIG"/{hooks,segments,peekabo}
+  export SBP_STATE="${TMP_DIR}/local_state"
+  mkdir -p "$SBP_STATE/log"
 }
 
 # Helpers that override SBP functions
@@ -29,6 +32,9 @@ segments::test_segment() {
   execute::execute_prompt_hooks
   read -r result <"$pipe_name"
   assert_equal "$result" 'success'
+
+  # Check that the hook log file was created
+  assert [ -f "${SBP_STATE}/log/hook.log" ]
 }
 
 @test "test that we pass the correct environment variables to segments" {

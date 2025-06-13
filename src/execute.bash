@@ -20,7 +20,7 @@ execute::execute_nohup_function() {
   (
     trap '' HUP INT
     "$@"
-  ) </dev/null &>>"${SBP_CONFIG}/hook.log" &
+  ) </dev/null &>>"${SBP_STATE}/log/hook.log" &
 }
 
 execute::execute_prompt_hooks() {
