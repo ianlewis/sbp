@@ -9,6 +9,7 @@ colors_template="${SBP_PATH}/config/colors.conf.template"
 default_colors="${SBP_PATH}/config/colors.conf"
 default_config="${SBP_PATH}/config/settings.conf"
 SBP_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/sbp"
+SBP_STATE="${XDG_STATE_HOME:-$HOME/.local/state}/sbp"
 
 configure::list_feature_files() {
   local feature_type=$1
@@ -80,7 +81,8 @@ configure::set_layout() {
 }
 
 configure::load_config() {
-  [[ -d $SBP_CACHE ]] || mkdir -p "$SBP_CACHE"
+  [[ -d ${SBP_CACHE} ]] || mkdir -p "${SBP_CACHE}"
+  [[ -d ${SBP_STATE}/log ]] || mkdir -p "${SBP_STATE}/log"
 
   if [[ ! -f $config_file ]]; then
     debug::log "Config file not found: ${config_file}"
