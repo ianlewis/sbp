@@ -53,7 +53,7 @@ setup() {
   local result
   touch "$global_config"
   touch "$local_config"
-  # shellcheck disable=SC2317
+  # shellcheck disable=SC2329
   source() { echo "$@"; }
   result="$(configure::set_colors 'local')"
   assert_equal "$result" "$local_config"
