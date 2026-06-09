@@ -5,7 +5,7 @@ segments::k8s() {
   [[ -f $KUBECONFIG ]] || return 0
   context="$(sed -n 's/.*current-context: \(.*\)/\1/p' "$KUBECONFIG")"
   [[ -z $context ]] && return 0
-  namespace="$(pcregrep -M -- "- context:\n(^\s\s\w*.*\n)*  name: ${context}" "${KUBECONFIG}" | sed -n 's/ *namespace: \(\w*\)/\1/p')"
+  namespace="$(grep -Pzo "(?s)\n\-\s*context:\n(\s+\w[^\n]*\n)*\s*name: ${context}" "${KUBECONFIG}" | tr '\0' '\n' | sed -n 's/ *namespace: \(\w*\)/\1/p')"
   if [[ -z $namespace ]]; then
     namespace='default'
   fi
